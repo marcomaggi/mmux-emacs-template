@@ -22,6 +22,7 @@ AM_MAKEINFOHTMLFLAGS	= --split=node -c WORDS_IN_PAGE=0 \
 info_TEXINFOS		= doc/mmux-emacs-template.texi
 doc_mmux_emacs_template_TEXINFOS = \
 	doc/macros.texi			\
+	doc/overview-linking.texi	\
 	doc/gpl-3.0.texi		\
 	doc/fdl-1.3.texi
 
