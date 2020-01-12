@@ -46,29 +46,37 @@ libmmux_emacs_template_la_SOURCES	= \
 	src/mmux-emacs-template-library.c
 
 
+#### Emacs code
+
+# This  variable is  reserved to  the  package author.   Users of  the
+# package can set ELCFLAGS.
+AM_ELCFLAGS	= --quick --directory $(PWD)/.libs
+
+dist_lisp_LISP	= src/mmux-emacs-template.el
+
+src/mmux-emacs-template.elc: libmmux-emacs-template.la
+
+
 #### tests
 
-check_PROGRAMS	= \
-	tests/version
+MMUX_EMACS_TEMPLATE_TESTS = \
+	tests/version.el
 
-#if MMUX_TESTING_ENABLED
-TESTS				= $(check_PROGRAMS)
-#endif
+EXTRA_DIST	+= $(MMUX_EMACS_TEMPLATE_TESTS)
+TESTS		 = $(MMUX_EMACS_TEMPLATE_TESTS)
 
-mmux_emacs_template_tests_cppflags	= $(AM_CPPFLAGS) -I$(srcdir)/tests
-mmux_emacs_template_tests_cflags	= $(AM_CFLAGS)
-mmux_emacs_template_tests_ldadd		= $(AM_LDFLAGS) libmmux-emacs-template.la
-
-## --------------------------------------------------------------------
-
-tests_version_CPPFLAGS		= $(mmux_emacs_template_tests_cppflags)
-tests_version_CFLAGS		= $(mmux_emacs_template_tests_cflags)
-tests_version_LDADD		= $(mmux_emacs_template_tests_ldadd)
+# We must make sure that this ends with a semicolon!!!
+AM_TESTS_ENVIRONMENT	=
+TEST_EXTENSIONS		= .el
+EL_LOG_COMPILER		= $(EMACS)
+AM_EL_LOG_FLAGS		= --batch --quick --directory $(builddir)/.libs --directory $(builddir)/src -l
 
 ## --------------------------------------------------------------------
+
+MMUX_EMACS_INSTALLCHECK	= $(EMACS) --batch --quick --directory $(libdir) --directory $(lispdir) -l
 
 installcheck-local: $(TESTS)
-	@for f in $(TESTS); do $(builddir)/$$f; done
+	@for f in $(TESTS); do $(MMUX_EMACS_INSTALLCHECK) $(srcdir)/$$f; done
 
 
 #### common rules

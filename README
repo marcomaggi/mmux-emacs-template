@@ -32,8 +32,8 @@ on "pkg-config" to find the dependencies installed on the system.
 2. License
 ----------
 
-Copyright (c) 2020 Marco Maggi
-<mrc.mgg@gmail.com>
+Copyright (c) 2020 Marco Maggi <mrc.mgg@gmail.com>
+Copyright (C) 2017 by Syohei YOSHIDA <https://github.com/syohex>
 
 This program is free software: you  can redistribute it and/or modify it
 under the  terms of the GNU  General Public License as  published by the
@@ -52,7 +52,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 3. Install
 ----------
 
-To install from a proper release tarball, do this:
+First make sure that your GNU Emacs installation has enabled support for
+dynamic modules.   Check the elisp variable  "module-file-suffix": if it
+is  set  to  nil, modules  are  disabled  and  we  need to  rebuild  and
+reinstall the GNU Emacs package.
+
+  To install from a proper release tarball, do this:
 
     $ cd mmux-emacs-template-0.1.0
     $ mkdir build
@@ -127,6 +132,9 @@ A. Credits
 
 The  stuff was  written by  Marco Maggi.   If this  package exists  it's
 because of the great GNU software tools that he uses all the time.
+
+  Some code in the Emacs  module's infrastructure comes from projects by
+Syohei YOSHIDA.
 
 
 B. Bugs, vulnerabilities and contributions

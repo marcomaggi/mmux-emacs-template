@@ -19,6 +19,7 @@ both Ubuntu GNU+Linux  systems and OS X systems.  The  package relies on
 
 Copyright (c) 2020 Marco Maggi<br/>
 `mrc.mgg@gmail.com`<br/>
+Copyright (C) 2017 by Syohei YOSHIDA <https://github.com/syohex><br/>
 All rights reserved.
 
 This program is free software: you  can redistribute it and/or modify it
@@ -35,6 +36,11 @@ You should have received a copy  of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## Install
+
+First make sure that your GNU Emacs installation has enabled support for
+dynamic modules.   Check the elisp variable  `module-file-suffix': if it
+is set to nil, modules are disabled and we need to rebuild and reinstall
+the GNU Emacs package.
 
 To install from a proper release tarball, do this:
 
@@ -128,6 +134,9 @@ $ make install-html
 
 The  stuff was  written by  Marco Maggi.   If this  package exists  it's
 because of the great GNU software tools that he uses all the time.
+
+Some code  in the Emacs  module's infrastructure comes from  projects by
+Syohei YOSHIDA.
 
 ## Bugs, vulnerabilities and contributions
 

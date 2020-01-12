@@ -34,17 +34,17 @@
 extern "C" {
 #endif
 
-/* The macro CCT_UNUSED indicates that a  function, function argument or variable may
+/* The macro MET_UNUSED indicates that a  function, function argument or variable may
    potentially be unused. Usage examples:
 
-   static int unused_function (char arg) CCT_UNUSED;
-   int foo (char unused_argument CCT_UNUSED);
-   int unused_variable CCT_UNUSED;
+   static int unused_function (char arg) MET_UNUSED;
+   int foo (char unused_argument MET_UNUSED);
+   int unused_variable MET_UNUSED;
 */
 #ifdef __GNUC__
-#  define CCT_UNUSED		__attribute__((__unused__))
+#  define MET_UNUSED		__attribute__((__unused__))
 #else
-#  define CCT_UNUSED		/* empty */
+#  define MET_UNUSED		/* empty */
 #endif
 
 #ifndef __GNUC__
@@ -56,25 +56,25 @@ extern "C" {
 #if defined _WIN32 || defined __CYGWIN__
 #  ifdef BUILDING_DLL
 #    ifdef __GNUC__
-#      define cct_decl		__attribute__((__dllexport__)) extern
+#      define met_decl		__attribute__((__dllexport__)) extern
 #    else
-#      define cct_decl		__declspec(dllexport) extern
+#      define met_decl		__declspec(dllexport) extern
 #    endif
 #  else
 #    ifdef __GNUC__
-#      define cct_decl		__attribute__((__dllimport__)) extern
+#      define met_decl		__attribute__((__dllimport__)) extern
 #    else
-#      define cct_decl		__declspec(dllimport) extern
+#      define met_decl		__declspec(dllimport) extern
 #    endif
 #  endif
-#  define cct_private_decl	extern
+#  define met_private_decl	extern
 #else
 #  if __GNUC__ >= 4
-#    define cct_decl		__attribute__((__visibility__("default"))) extern
-#    define cct_private_decl	__attribute__((__visibility__("hidden")))  extern
+#    define met_decl		__attribute__((__visibility__("default"))) extern
+#    define met_private_decl	__attribute__((__visibility__("hidden")))  extern
 #  else
-#    define cct_decl		extern
-#    define cct_private_decl	extern
+#    define met_decl		extern
+#    define met_private_decl	extern
 #  endif
 #endif
 
@@ -83,12 +83,10 @@ extern "C" {
  ** Headers.
  ** ----------------------------------------------------------------- */
 
-/* Enable everything GNU. */
-#define _GNU_SOURCE		1
-
 /* Enable latest POSIX features. */
 #define _POSIX_C_SOURCE		200809L
 
+#if 0
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -97,13 +95,16 @@ extern "C" {
 #include <setjmp.h>
 #include <errno.h>
 #include <unistd.h>
+#endif
+
+#include <emacs-module.h>
 
 
 /** --------------------------------------------------------------------
  ** Constants and preprocessor macros.
  ** ----------------------------------------------------------------- */
 
-#define CCT_PC(POINTER_TYPE, POINTER_NAME, EXPRESSION)	\
+#define MET_PC(POINTER_TYPE, POINTER_NAME, EXPRESSION)	\
   POINTER_TYPE * POINTER_NAME = (POINTER_TYPE *) (EXPRESSION)
 
 
@@ -111,17 +112,17 @@ extern "C" {
  ** Version functions.
  ** ----------------------------------------------------------------- */
 
-cct_decl char const *	cct_version_string		(void);
-cct_decl int		cct_version_interface_current	(void);
-cct_decl int		cct_version_interface_revision	(void);
-cct_decl int		cct_version_interface_age	(void);
+met_decl char const *	met_version_string		(void);
+met_decl int		met_version_interface_current	(void);
+met_decl int		met_version_interface_revision	(void);
+met_decl int		met_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
  ** Library initialisation.
  ** ----------------------------------------------------------------- */
 
-cct_decl void cct_library_init (void)
+met_decl void met_library_init (void)
   __attribute__((__constructor__));
 
 

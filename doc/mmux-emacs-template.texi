@@ -43,8 +43,8 @@
 @set PackageCflagsVar                   @env{MMUX_EMACS_TEMPLATE_CFLAGS}
 @c This is the stem of the library in "libmmux-emacs-template.so".
 @set PackageLibstem                     mmux-emacs-template
-@set PackageApiPrefixLower              cct_
-@set PackageApiPrefixUpper              CCT_
+@set PackageApiPrefixLower              met_
+@set PackageApiPrefixUpper              MET_
 
 @set PackageHeader                      mmux-emacs-template.h
 @set PackageHeaderFile                  @file{@value{PackageHeader}}
@@ -95,7 +95,8 @@ and as backup at:
 @center @value{BitbucketUrl}
 
 @noindent
-Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}
+Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}@*
+Copyright @copyright{} 2017 by Syohei YOSHIDA @url{https://github.com/syohex}
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document under the terms of the @gnu{}
@@ -192,7 +193,7 @@ names are prefixed with @code{@value{PackageApiPrefixUpper}}; all the type names
 @chapter Library initialisation
 
 
-@deftypefun void cct_library_init (void)
+@deftypefun void met_library_init (void)
 Initialise the internal structures of the library.  It is fine to call this function multiple times.
 
 @quotation
@@ -211,23 +212,23 @@ explanation of interface numbers as managed by @gnu{} Libtool @xref{Libtool vers
 Libtool's versioning system, libtool, Shared library support for @gnu{}}.
 
 
-@deftypefun {char const *} cct_version_string (void)
+@deftypefun {char const *} met_version_string (void)
 Return a pointer to a statically allocated @asciiz{} string representing the interface version
 number.
 @end deftypefun
 
 
-@deftypefun int cct_version_interface_current (void)
+@deftypefun int met_version_interface_current (void)
 Return an integer representing the library interface current number.
 @end deftypefun
 
 
-@deftypefun int cct_version_interface_revision (void)
+@deftypefun int met_version_interface_revision (void)
 Return an integer representing the library interface current revision number.
 @end deftypefun
 
 
-@deftypefun int cct_version_interface_age (void)
+@deftypefun int met_version_interface_age (void)
 Return an integer representing the library interface current age.
 @end deftypefun
 
