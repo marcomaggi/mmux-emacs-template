@@ -9,7 +9,8 @@
 This is  a template project, to  be used as starting  point for packages
 that implement a GNU Emacs module on top of a C11 language library.
 
-The library targets POSIX systems.
+The library  targets POSIX systems.To  run the test suite:  this package
+requires the ERT package.
 
 The package uses the GNU Autotools and it is tested, using Travis CI, on
 both Ubuntu GNU+Linux  systems and OS X systems.  The  package relies on
