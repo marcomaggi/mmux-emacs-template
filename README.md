@@ -120,6 +120,26 @@ $ make check
 $ make install
 ```
 
+The C language shared library is installed under `$libdir`, for example:
+
+```
+/usr/local/lib64
+```
+
+while the Emacs code goes under `$lispdir`, for example:
+
+```
+/usr/local/share/emacs/site-lisp
+```
+
+so to load the module we should do something like:
+
+```
+(add-to-list 'load-path "/usr/local/lib64"
+                        "/usr/local/share/emacs/site-lisp")
+(require 'mmux-emacs-template)
+```
+
 ## Usage
 
 Read the documentation generated from  the Texinfo sources.  The package

@@ -180,9 +180,23 @@ This package supports @posix{} platforms.  The library supports @posix{} platfor
 meant to work with @gnu{} Emacs version 26+.  To run the test suite: this package requires the ERT
 package.
 
-@value{PACKAGE} installs the single Emacs module @code{mmux-emacs-template}, which we can load with:
+@value{PACKAGE} installs the single Emacs module @code{mmux-emacs-template} and the C language
+shared library with stem @code{libmmux-emacs-template}.  The C language shared library is installed
+under @samp{$libdir}, for example:
+
+@center @file{/usr/local/lib64}
+
+@noindent
+while the Emacs code goes under @samp{$lispdir}, for example:
+
+@center @file{/usr/local/share/emacs/site-lisp}
+
+@noindent
+so to load the module we should do something like:
 
 @lisp
+(add-to-list 'load-path "/usr/local/lib64"
+                        "/usr/local/share/emacs/site-lisp")
 (require 'mmux-emacs-template)
 @end lisp
 
