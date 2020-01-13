@@ -8,7 +8,6 @@
 	This module implements library initialisation and version numbers inspection.
 
   Copyright (C) 2020 Marco Maggi <mrc.mgg@gmail.com>
-  Copyright (C) 2017 by Syohei YOSHIDA <https://github.com/syohex>
 
   This program is free  software: you can redistribute it and/or  modify it under the
   terms  of  the  GNU General  Public  License  as  published  by the  Free  Software
@@ -96,42 +95,81 @@ Fmet_version_interface_age (emacs_env *env, ptrdiff_t nargs MET_UNUSED, emacs_va
 /* This is required by GNU Emacs' API. */
 int  plugin_is_GPL_compatible;
 
-static void
-bind_function (emacs_env *env, char const *name, emacs_value Sfun)
-{
-  emacs_value Qfset = env->intern(env, "fset");
-  emacs_value Qsym = env->intern(env, name);
-  emacs_value args[] = { Qsym, Sfun };
+typedef emacs_value function_implementation_t (emacs_env *env, ptrdiff_t nargs, emacs_value args[], void *data);
 
-  env->funcall(env, Qfset, 2, args);
-}
+typedef struct module_function_t	module_function_t;
 
-static void
-provide (emacs_env *env, char const * feature)
-{
-  emacs_value Qfeat = env->intern(env, feature);
-  emacs_value Qprovide = env->intern (env, "provide");
-  emacs_value args[] = { Qfeat };
+struct module_function_t {
+  char const			* name;
+  function_implementation_t	* implementation;
+  ptrdiff_t			min_arity;
+  ptrdiff_t			max_arity;
+  char const			* documentation;
+};
 
-  env->funcall(env, Qprovide, 1, args);
-}
+#define NUMBER_OF_MODULE_FUNCTIONS	4
+static module_function_t const module_functions[NUMBER_OF_MODULE_FUNCTIONS] = {
+  {
+    .name		= "met-version-string",
+    .implementation	= Fmet_version_string,
+    .min_arity		= 0,
+    .max_arity		= 0,
+    .documentation	= "Return the version string."
+  },
+  {
+    .name		= "met-version-interface-current",
+    .implementation	= Fmet_version_interface_current,
+    .min_arity		= 0,
+    .max_arity		= 0,
+    .documentation	= "Return the interface version current number."
+  },
+  {
+    .name		= "met-version-interface-revision",
+    .implementation	= Fmet_version_interface_revision,
+    .min_arity		= 0,
+    .max_arity		= 0,
+    .documentation	= "Return the interface version revision number."
+  },
+  {
+    .name		= "met-version-interface-age",
+    .implementation	= Fmet_version_interface_age,
+    .min_arity		= 0,
+    .max_arity		= 0,
+    .documentation	= "Return the interface version age number."
+  }
+};
 
 int
 emacs_module_init (struct emacs_runtime *ert)
 {
-  emacs_env	*env = ert->get_environment(ert);
+  if (ert->size < (ptrdiff_t)sizeof(*ert)) {
+    return 1;
+  } else {
+    emacs_env	*env = ert->get_environment(ert);
 
-#define DEFUN(lsym, csym, amin, amax, doc, data)			\
-  bind_function (env, lsym, env->make_function(env, amin, amax, csym, doc, data))
+    if (env->size < (ptrdiff_t)sizeof(*env)) {
+      return 2;
+    }
 
-  DEFUN("met-version-string",			Fmet_version_string,		0, 0, "Return the version string", NULL);
-  DEFUN("met-version-interface-current",	Fmet_version_interface_current,	0, 0, "Return the interface version current number", NULL);
-  DEFUN("met-version-interface-revision",	Fmet_version_interface_revision,0, 0, "Return the interface version revision number", NULL);
-  DEFUN("met-version-interface-age",		Fmet_version_interface_age,	0, 0, "Return the interface version age number", NULL);
-#undef DEFUN
+    {
+      emacs_value	Qdefalias = env->intern(env, "defalias");
 
-  provide(env, "libmmux-emacs-template");
-  return 0;
+      for (int i=0; i<NUMBER_OF_MODULE_FUNCTIONS; ++i) {
+	emacs_value	args[2]	= {
+	  env->intern(env, module_functions[i].name),
+	  env->make_function(env,
+			     module_functions[i].min_arity,
+			     module_functions[i].max_arity,
+			     module_functions[i].implementation,
+			     module_functions[i].documentation,
+			     NULL)
+	};
+	env->funcall(env, Qdefalias, 2, args);
+      }
+    }
+
+    return 0;
+  }
 }
 
 /* end of file */

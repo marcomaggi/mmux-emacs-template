@@ -76,9 +76,10 @@
 This document describes version @value{VERSION} of @value{PACKAGE}, a @gnu{} Emacs module
 implemented on top of a C11 language library.
 
-The library supports @posix{} platforms.
+The library supports @posix{} platforms.  This package is meant to work with @gnu{} Emacs version
+26+.  To run the test suite: this package requires the ERT package.
 
-This package is distributed under the terms of the @gnu{} General Public License (@lgpl{}).
+This package is distributed under the terms of the @gnu{} General Public License (@gpl{}).
 
 The latest release can be downloaded from:
 
@@ -96,7 +97,6 @@ and as backup at:
 
 @noindent
 Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}@*
-Copyright @copyright{} 2017 by Syohei YOSHIDA @url{https://github.com/syohex}
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document under the terms of the @gnu{}
@@ -147,7 +147,6 @@ included in the section entitled ``@gnu{} Free Documentation License''.
 
 @menu
 * overview::                    Overview of the package.
-* init::                        Library initialisation.
 * version::                     Version functions.
 
 Appendices
@@ -162,6 +161,10 @@ Indexes
 * function index::              An entry for each function.
 * variable index::              An entry for each variable.
 * type index::                  An entry for each type.
+
+External documents
+
+* modules: (elisp)Writing Dynamic Modules.
 @end menu
 @end ifnottex
 
@@ -173,7 +176,15 @@ Indexes
 This document describes version @value{VERSION} of @value{PACKAGE}, a @gnu{} Emacs module
 implemented on top of a C11 language library.
 
-This package supports @posix{} platforms.
+This package supports @posix{} platforms.  The library supports @posix{} platforms.  This package is
+meant to work with @gnu{} Emacs version 26+.  To run the test suite: this package requires the ERT
+package.
+
+@value{PACKAGE} installs the single Emacs module @code{mmux-emacs-template}, which we can load with:
+
+@lisp
+(require 'mmux-emacs-template)
+@end lisp
 
 @cindex @value{PackageHeaderFile}, header file
 @cindex Header file @value{PackageHeaderFile}
@@ -189,20 +200,6 @@ names are prefixed with @code{@value{PackageApiPrefixUpper}}; all the type names
 @include overview-linking.texi
 
 @c page
-@node init
-@chapter Library initialisation
-
-
-@deftypefun void met_library_init (void)
-Initialise the internal structures of the library.  It is fine to call this function multiple times.
-
-@quotation
-@strong{NOTE} This function is defined with the @gcc{} attribute @code{constructor}, so, when the
-library is built with @gcc{}: it will be called automatically by the library initialisation code.
-@end quotation
-@end deftypefun
-
-@c page
 @node version
 @chapter Version functions
 
@@ -212,23 +209,23 @@ explanation of interface numbers as managed by @gnu{} Libtool @xref{Libtool vers
 Libtool's versioning system, libtool, Shared library support for @gnu{}}.
 
 
-@deftypefun {char const *} met_version_string (void)
+@deftypefun {char const *} met-version-string (void)
 Return a pointer to a statically allocated @asciiz{} string representing the interface version
 number.
 @end deftypefun
 
 
-@deftypefun int met_version_interface_current (void)
+@deftypefun int met-version-interface-current (void)
 Return an integer representing the library interface current number.
 @end deftypefun
 
 
-@deftypefun int met_version_interface_revision (void)
+@deftypefun int met-version-interface-revision (void)
 Return an integer representing the library interface current revision number.
 @end deftypefun
 
 
-@deftypefun int met_version_interface_age (void)
+@deftypefun int met-version-interface-age (void)
 Return an integer representing the library interface current age.
 @end deftypefun
 

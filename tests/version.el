@@ -24,19 +24,27 @@
 
 (ert-deftest version-string ()
   "Retrieve the version string."
-  (should (stringp (met-version-string))))
+  (should (stringp (met-version-string)))
+  (should (string= "Return the version string."
+		   (documentation 'met-version-string))))
 
 (ert-deftest version-interface-current ()
   "Retrieve the interface current version."
-  (should (<= 0 (met-version-interface-current))))
+  (should (<= 0 (met-version-interface-current)))
+  (should (string= "Return the interface version current number."
+		   (documentation 'met-version-interface-current))))
 
 (ert-deftest version-interface-revision ()
   "Retrieve the interface revision version."
-  (should (<= 0 (met-version-interface-revision))))
+  (should (<= 0 (met-version-interface-revision)))
+  (should (string= "Return the interface version revision number."
+		   (documentation 'met-version-interface-revision))))
 
 (ert-deftest version-interface-age ()
   "Retrieve the interface age version."
-  (should (<= 0 (met-version-interface-age))))
+  (should (<= 0 (met-version-interface-age)))
+  (should (string= "Return the interface version age number."
+		   (documentation 'met-version-interface-age))))
 
 (ert-run-tests-batch-and-exit)
 

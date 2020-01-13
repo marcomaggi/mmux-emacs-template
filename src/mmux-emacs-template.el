@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Sun Jan 12, 2020
-;; Time-stamp: <2020-01-12 12:57:07 marco>
+;; Time-stamp: <2020-01-13 18:40:45 marco>
 ;; Keywords: extensions
 
 ;; This file is part of MMUX Emacs Template.
@@ -31,7 +31,7 @@
 
 ;;; Code:
 
-(require 'libmmux-emacs-template)
+(load "libmmux-emacs-template")
 
 (provide 'mmux-emacs-template)
 

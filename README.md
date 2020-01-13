@@ -9,8 +9,9 @@
 This is  a template project, to  be used as starting  point for packages
 that implement a GNU Emacs module on top of a C11 language library.
 
-The library  targets POSIX systems.To  run the test suite:  this package
-requires the ERT package.
+The library targets  POSIX systems.  This package is meant  to work with
+GNU Emacs version 26+.  To run the test suite: this package requires the
+ERT package.
 
 The package uses the GNU Autotools and it is tested, using Travis CI, on
 both Ubuntu GNU+Linux  systems and OS X systems.  The  package relies on
@@ -20,7 +21,6 @@ both Ubuntu GNU+Linux  systems and OS X systems.  The  package relies on
 
 Copyright (c) 2020 Marco Maggi<br/>
 `mrc.mgg@gmail.com`<br/>
-Copyright (C) 2017 by Syohei YOSHIDA <https://github.com/syohex><br/>
 All rights reserved.
 
 This program is free software: you  can redistribute it and/or modify it
