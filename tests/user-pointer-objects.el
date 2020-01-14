@@ -27,7 +27,7 @@
   (should (mmux-template-make-cplx 1.0 2.0)))
 
 (ert-deftest inspect-cplx ()
-  "Build a cplx object."
+  "Inspect a cplx object."
   (let ((obj (mmux-template-make-cplx 1.0 2.0)))
     (should (= 1.0 (mmux-template-get-X obj)))
     (should (= 2.0 (mmux-template-get-Y obj)))))

@@ -303,6 +303,15 @@ and as backup at:
 
 @center @value{BitbucketUrl}
 
+We can found informations and examples about Emacs modules at the repository mirror, under the
+@file{modules} directory:
+
+@center @url{https://github.com/emacs-mirror/emacs}
+
+There is also a list of resources about Emacs modules:
+
+@center @url{https://github.com/emacs-pe/emacs-modules}
+
 @c page
 @node concept index
 @appendix An entry for each concept

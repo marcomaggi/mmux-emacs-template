@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Sun Jan 12, 2020
-;; Time-stamp: <2020-01-13 18:40:45 marco>
+;; Time-stamp: <2020-01-14 12:15:34 marco>
 ;; Keywords: extensions
 
 ;; This file is part of MMUX Emacs Template.
@@ -31,7 +31,25 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (load "libmmux-emacs-template")
+
+(cl-defstruct mmux-template-cplx
+  obj)
+
+(defun mmux-template-make-cplx (X Y)
+  "Build and return a new cplx object."
+  (make-mmux-template-cplx :obj (mmux-template-cplx-cmake X Y)))
+
+(defun mmux-template-get-X (obj)
+  "Return the X component of an object of type `mmux-template-cplx'."
+  (cl-assert (mmux-template-cplx-p obj))
+  (mmux-template-cplx-cget-X (mmux-template-cplx-obj obj)))
+
+(defun mmux-template-get-Y (obj)
+  "Return the Y component of an object of type `mmux-template-cplx'."
+  (cl-assert (mmux-template-cplx-p obj))
+  (mmux-template-cplx-cget-Y (mmux-template-cplx-obj obj)))
 
 (provide 'mmux-emacs-template)
 

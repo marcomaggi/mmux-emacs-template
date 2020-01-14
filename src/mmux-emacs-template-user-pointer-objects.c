@@ -49,8 +49,8 @@ cplx_finalizer (void * obj)
 }
 
 static emacs_value
-Fmmux_template_make_cplx (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
-			  emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
+Fmmux_template_cplx_cmake (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
+			   emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
 {
   double		X = env->extract_float(env, args[0]);
   double		Y = env->extract_float(env, args[1]);
@@ -63,8 +63,8 @@ Fmmux_template_make_cplx (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UN
 }
 
 static emacs_value
-Fmmux_template_get_X (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
-		      emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
+Fmmux_template_cplx_cget_X (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
+			    emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
 {
   mmux_template_cplx_t	* obj = env->get_user_ptr(env, args[0]);
 
@@ -72,8 +72,8 @@ Fmmux_template_get_X (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED
 }
 
 static emacs_value
-Fmmux_template_get_Y (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
-		      emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
+Fmmux_template_cplx_cget_Y (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
+			    emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
 {
   mmux_template_cplx_t	* obj = env->get_user_ptr(env, args[0]);
 
@@ -88,22 +88,22 @@ Fmmux_template_get_Y (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED
 #define NUMBER_OF_MODULE_FUNCTIONS	3
 static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS] = {
   {
-    .name		= "mmux-template-make-cplx",
-    .implementation	= Fmmux_template_make_cplx,
+    .name		= "mmux-template-cplx-cmake",
+    .implementation	= Fmmux_template_cplx_cmake,
     .min_arity		= 2,
     .max_arity		= 2,
     .documentation	= "Build and return a new cplx object."
   },
   {
-    .name		= "mmux-template-get-X",
-    .implementation	= Fmmux_template_get_X,
+    .name		= "mmux-template-cplx-cget-X",
+    .implementation	= Fmmux_template_cplx_cget_X,
     .min_arity		= 1,
     .max_arity		= 1,
     .documentation	= "Return the X component of a cplx object."
   },
   {
-    .name		= "mmux-template-get-Y",
-    .implementation	= Fmmux_template_get_Y,
+    .name		= "mmux-template-cplx-cget-Y",
+    .implementation	= Fmmux_template_cplx_cget_Y,
     .min_arity		= 1,
     .max_arity		= 1,
     .documentation	= "Return the Y component of a cplx object."
