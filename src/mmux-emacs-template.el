@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Sun Jan 12, 2020
-;; Time-stamp: <2020-01-14 12:15:34 marco>
+;; Time-stamp: <2020-01-14 15:22:56 marco>
 ;; Keywords: extensions
 
 ;; This file is part of MMUX Emacs Template.
@@ -33,6 +33,14 @@
 
 (require 'cl-lib)
 (load "libmmux-emacs-template")
+
+(define-error 'mmux-template-error
+  "Error while executing a MMUX Emacs Template operation."
+  'error)
+
+(define-error 'mmux-template-no-memory-error
+  "Error allocating memory."
+  'mmux-template-error)
 
 (cl-defstruct mmux-template-cplx
   obj)

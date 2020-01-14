@@ -68,7 +68,7 @@ Fmmux_template_cplx_cmake (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_U
        node "Standard Errors" for a list of  the standard error symbols; see the node
        "Error Symbols"  for methods to define  error symbols.  (Marco Maggi;  Jan 14,
        2020) */
-    env->non_local_exit_signal(env, env->intern(env, "error"), Serrmsg);
+    env->non_local_exit_signal(env, env->intern(env, "mmux-template-no-memory-error"), Serrmsg);
     return env->intern(env, "nil");
   } else {
     obj->X = X;
