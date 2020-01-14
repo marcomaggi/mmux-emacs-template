@@ -28,7 +28,9 @@
  ** ----------------------------------------------------------------- */
 
 #include "mmux-emacs-template-internals.h"
+#include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 
 
 /** --------------------------------------------------------------------
@@ -54,12 +56,25 @@ Fmmux_template_cplx_cmake (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_U
 {
   double		X = env->extract_float(env, args[0]);
   double		Y = env->extract_float(env, args[1]);
-  mmux_template_cplx_t	* obj = malloc(sizeof(mmux_template_cplx_t));
+  mmux_template_cplx_t	* obj;
 
-  obj->X = X;
-  obj->Y = Y;
+  errno = 0;
+  obj   = malloc(sizeof(mmux_template_cplx_t));
+  if (NULL == obj) {
+    char const		* errmsg = strerror(errno);
+    emacs_value		Serrmsg = env->make_string(env, errmsg, strlen(errmsg));
 
-  return env->make_user_ptr(env, cplx_finalizer, obj);
+    /* Signal an error,  then immediately return.  In the "elisp"  Info file: see the
+       node "Standard Errors" for a list of  the standard error symbols; see the node
+       "Error Symbols"  for methods to define  error symbols.  (Marco Maggi;  Jan 14,
+       2020) */
+    env->non_local_exit_signal(env, env->intern(env, "error"), Serrmsg);
+    return env->intern(env, "nil");
+  } else {
+    obj->X = X;
+    obj->Y = Y;
+    return env->make_user_ptr(env, cplx_finalizer, obj);
+  }
 }
 
 static emacs_value
