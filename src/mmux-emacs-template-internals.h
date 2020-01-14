@@ -47,7 +47,7 @@
  ** ----------------------------------------------------------------- */
 
 /* This is required by GNU Emacs' API. */
-met_decl int  plugin_is_GPL_compatible;
+mmux_emacs_template_decl int  plugin_is_GPL_compatible;
 
 
 /** --------------------------------------------------------------------

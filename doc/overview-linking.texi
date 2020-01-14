@@ -82,7 +82,7 @@ export PKG_CONFIG_PATH
 Alternatively we can use the raw @gnu{} Autoconf macros:
 
 @example
-AC_CHECK_LIB([@value{PackageLibstem}],[@value{PackageApiPrefixLower}version_string],,
+AC_CHECK_LIB([@value{PackageLibstem}],[@value{PackageApiCPrefixLower}version_string],,
   [AC_MSG_FAILURE([test for @value{TITLE} library failed])])
 AC_CHECK_HEADERS([@value{PackageHeader}],,
   [AC_MSG_FAILURE([test for @value{TITLE} header failed])])

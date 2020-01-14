@@ -32,26 +32,34 @@
 
 
 /** --------------------------------------------------------------------
+ ** Global variables.
+ ** ----------------------------------------------------------------- */
+
+/* This is required by GNU Emacs' API. */
+int  plugin_is_GPL_compatible;
+
+
+/** --------------------------------------------------------------------
  ** Version functions.
  ** ----------------------------------------------------------------- */
 
 char const *
-met_version_string (void)
+mmux_emacs_template_version_string (void)
 {
   return mmux_emacs_template_VERSION_INTERFACE_STRING;
 }
 int
-met_version_interface_current (void)
+mmux_emacs_template_version_interface_current (void)
 {
   return mmux_emacs_template_VERSION_INTERFACE_CURRENT;
 }
 int
-met_version_interface_revision (void)
+mmux_emacs_template_version_interface_revision (void)
 {
   return mmux_emacs_template_VERSION_INTERFACE_REVISION;
 }
 int
-met_version_interface_age (void)
+mmux_emacs_template_version_interface_age (void)
 {
   return mmux_emacs_template_VERSION_INTERFACE_AGE;
 }
@@ -59,41 +67,46 @@ met_version_interface_age (void)
 /* ------------------------------------------------------------------ */
 
 static emacs_value
-Fmet_version_string (emacs_env *env, ptrdiff_t nargs MET_UNUSED, emacs_value args[]  MET_UNUSED, void *data MET_UNUSED)
+Fmmux_template_version_string (emacs_env *env,
+			       ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED, emacs_value args[] MMUX_EMACS_TEMPLATE_UNUSED,
+			       void *data MMUX_EMACS_TEMPLATE_UNUSED)
 {
-  char const *	str = met_version_string();
+  char const *	str = mmux_emacs_template_version_string();
 
   return env->make_string(env, str, strlen(str));
 }
 static emacs_value
-Fmet_version_interface_current (emacs_env *env, ptrdiff_t nargs MET_UNUSED, emacs_value args[]  MET_UNUSED, void *data MET_UNUSED)
+Fmmux_template_version_interface_current (emacs_env *env,
+					  ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED, emacs_value args[] MMUX_EMACS_TEMPLATE_UNUSED,
+					  void *data MMUX_EMACS_TEMPLATE_UNUSED)
 {
-  int	N = met_version_interface_current();
+  int	N = mmux_emacs_template_version_interface_current();
 
   return env->make_integer(env, (intmax_t)N);
 }
 static emacs_value
-Fmet_version_interface_revision (emacs_env *env, ptrdiff_t nargs MET_UNUSED, emacs_value args[]  MET_UNUSED, void *data MET_UNUSED)
+Fmmux_template_version_interface_revision (emacs_env *env,
+					   ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED, emacs_value args[] MMUX_EMACS_TEMPLATE_UNUSED,
+					   void *data MMUX_EMACS_TEMPLATE_UNUSED)
 {
-  int	N = met_version_interface_revision();
+  int	N = mmux_emacs_template_version_interface_revision();
 
   return env->make_integer(env, (intmax_t)N);
 }
 static emacs_value
-Fmet_version_interface_age (emacs_env *env, ptrdiff_t nargs MET_UNUSED, emacs_value args[]  MET_UNUSED, void *data MET_UNUSED)
+Fmmux_template_version_interface_age (emacs_env *env,
+				      ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED, emacs_value args[] MMUX_EMACS_TEMPLATE_UNUSED,
+				      void *data MMUX_EMACS_TEMPLATE_UNUSED)
 {
-  int	N = met_version_interface_age();
+  int	N = mmux_emacs_template_version_interface_age();
 
   return env->make_integer(env, (intmax_t)N);
 }
 
 
 /** --------------------------------------------------------------------
- ** Library initialisation.
+ ** Table of elisp functions.
  ** ----------------------------------------------------------------- */
-
-/* This is required by GNU Emacs' API. */
-int  plugin_is_GPL_compatible;
 
 typedef emacs_value function_implementation_t (emacs_env *env, ptrdiff_t nargs, emacs_value args[], void *data);
 
@@ -110,34 +123,39 @@ struct module_function_t {
 #define NUMBER_OF_MODULE_FUNCTIONS	4
 static module_function_t const module_functions[NUMBER_OF_MODULE_FUNCTIONS] = {
   {
-    .name		= "met-version-string",
-    .implementation	= Fmet_version_string,
+    .name		= "mmux-template-version-string",
+    .implementation	= Fmmux_template_version_string,
     .min_arity		= 0,
     .max_arity		= 0,
     .documentation	= "Return the version string."
   },
   {
-    .name		= "met-version-interface-current",
-    .implementation	= Fmet_version_interface_current,
+    .name		= "mmux-template-version-interface-current",
+    .implementation	= Fmmux_template_version_interface_current,
     .min_arity		= 0,
     .max_arity		= 0,
     .documentation	= "Return the interface version current number."
   },
   {
-    .name		= "met-version-interface-revision",
-    .implementation	= Fmet_version_interface_revision,
+    .name		= "mmux-template-version-interface-revision",
+    .implementation	= Fmmux_template_version_interface_revision,
     .min_arity		= 0,
     .max_arity		= 0,
     .documentation	= "Return the interface version revision number."
   },
   {
-    .name		= "met-version-interface-age",
-    .implementation	= Fmet_version_interface_age,
+    .name		= "mmux-template-version-interface-age",
+    .implementation	= Fmmux_template_version_interface_age,
     .min_arity		= 0,
     .max_arity		= 0,
     .documentation	= "Return the interface version age number."
   }
 };
+
+
+/** --------------------------------------------------------------------
+ ** Module initialisation.
+ ** ----------------------------------------------------------------- */
 
 int
 emacs_module_init (struct emacs_runtime *ert)
@@ -149,9 +167,7 @@ emacs_module_init (struct emacs_runtime *ert)
 
     if (env->size < (ptrdiff_t)sizeof(*env)) {
       return 2;
-    }
-
-    {
+    } else {
       emacs_value	Qdefalias = env->intern(env, "defalias");
 
       for (int i=0; i<NUMBER_OF_MODULE_FUNCTIONS; ++i) {

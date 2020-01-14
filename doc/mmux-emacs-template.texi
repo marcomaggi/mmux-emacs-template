@@ -37,17 +37,21 @@
 
 @c ------------------------------------------------------------
 
-@set PackageAutoconfPrefix              MMUX-EMACS-TEMPLATE
-@set PackagePkgconfigModule             mmux-emacs-template
+@set PackageAutoconfPrefix              MMUX_EMACS_TEMPLATE
+@set PackagePkgconfigModule             @code{mmux-emacs-template}
 @set PackageLibsVar                     @env{MMUX_EMACS_TEMPLATE_LIBS}
 @set PackageCflagsVar                   @env{MMUX_EMACS_TEMPLATE_CFLAGS}
-@c This is the stem of the library in "libmmux-emacs-template.so".
-@set PackageLibstem                     mmux-emacs-template
-@set PackageApiPrefixLower              met_
-@set PackageApiPrefixUpper              MET_
 
+@set PackageLibstem                     @file{mmux-emacs-template}
+@set PackageSharedLibraryBasename       @file{libmmux-emacs-template}
+
+@set PackageEmacsModule                 @file{mmux-emacs-template}
 @set PackageHeader                      mmux-emacs-template.h
 @set PackageHeaderFile                  @file{@value{PackageHeader}}
+
+@set PackageApiCPrefixLower             mmux_emacs_template_
+@set PackageApiCPrefixUpper             MMUX_EMACS_TEMPLATE_
+@set PackageApiElispPrefix              mmux-template-
 
 @set GithubUrl                 @url{https://github.com/marcomaggi/@value{PACKAGE_NICKNAME}}
 @set BitbucketUrl              @url{https://bitbucket.org/marcomaggi/@value{PACKAGE_NICKNAME}}
@@ -176,23 +180,25 @@ External documents
 This document describes version @value{VERSION} of @value{PACKAGE}, a @gnu{} Emacs module
 implemented on top of a C11 language library.
 
-This package supports @posix{} platforms.  The library supports @posix{} platforms.  This package is
-meant to work with @gnu{} Emacs version 26+.  To run the test suite: this package requires the ERT
-package.
+This package supports @posix{} platforms.  This package is meant to work with @gnu{} Emacs version
+26+.  To run the test suite: this package requires the ERT package.
 
-@value{PACKAGE} installs the single Emacs module @code{mmux-emacs-template} and the C language
-shared library with stem @code{libmmux-emacs-template}.  The C language shared library is installed
-under @samp{$libdir}, for example:
+@value{PACKAGE} installs a single elisp module @value{PackageEmacsModule} and a C language shared
+library with basename @value{PackageSharedLibraryBasename} (using the @gnu{} Libtool
+infrastructure).  All the elisp definition names are prefixed with
+@code{@value{PackageApiElispPrefix}}.  The C language shared library is installed under
+@samp{$libdir}, for example:
 
 @center @file{/usr/local/lib64}
 
 @noindent
-while the Emacs code goes under @samp{$lispdir}, for example:
+while the elisp module goes under @samp{$lispdir}, for example:
 
 @center @file{/usr/local/share/emacs/site-lisp}
 
 @noindent
-so to load the module we should do something like:
+so to load the module (under an Emacs installation with dynamic modules enabled) we should do
+something like:
 
 @lisp
 (add-to-list 'load-path "/usr/local/lib64"
@@ -202,10 +208,12 @@ so to load the module we should do something like:
 
 @cindex @value{PackageHeaderFile}, header file
 @cindex Header file @value{PackageHeaderFile}
-@value{PACKAGE} installs the single header file @value{PackageHeaderFile}.  All the function names
-in the @api{} are prefixed with @code{@value{PackageApiPrefixLower}}; all the preprocessor symbol
-names are prefixed with @code{@value{PackageApiPrefixUpper}}; all the type names are prefixed with
-@code{@value{PackageApiPrefixLower}} and suffixed with @code{_t}.
+It might be possible that we want to write a C language library making use of the facilities of this
+package; so @value{PACKAGE} installs the single header file @value{PackageHeaderFile}.  All the C
+language function names in the @api{} are prefixed with @code{@value{PackageApiCPrefixLower}}; all
+the C language preprocessor symbol names are prefixed with @code{@value{PackageApiCPrefixUpper}};
+all the type names are prefixed with @code{@value{PackageApiCPrefixLower}} and suffixed with
+@code{_t}.
 
 @menu
 * overview linking::            Linking code with the library.
@@ -223,23 +231,43 @@ explanation of interface numbers as managed by @gnu{} Libtool @xref{Libtool vers
 Libtool's versioning system, libtool, Shared library support for @gnu{}}.
 
 
-@deftypefun {char const *} met-version-string (void)
+@defun mmux-template-version-string
+Return a string representing the interface version number.
+@end defun
+
+
+@defun mmux-template-version-interface-current
+Return an integer representing the library interface current number.
+@end defun
+
+
+@defun mmux-template-version-interface-revision
+Return an integer representing the library interface current revision number.
+@end defun
+
+
+@defun mmux-template-version-interface-age
+Return an integer representing the library interface current age.
+@end defun
+
+
+@deftypefun {char const *} mmux_emacs_template_version_string (void)
 Return a pointer to a statically allocated @asciiz{} string representing the interface version
 number.
 @end deftypefun
 
 
-@deftypefun int met-version-interface-current (void)
+@deftypefun int mmux_emacs_template_version_interface_current (void)
 Return an integer representing the library interface current number.
 @end deftypefun
 
 
-@deftypefun int met-version-interface-revision (void)
+@deftypefun int mmux_emacs_template_version_interface_revision (void)
 Return an integer representing the library interface current revision number.
 @end deftypefun
 
 
-@deftypefun int met-version-interface-age (void)
+@deftypefun int mmux_emacs_template_version_interface_age (void)
 Return an integer representing the library interface current age.
 @end deftypefun
 

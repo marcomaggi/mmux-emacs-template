@@ -34,17 +34,17 @@
 extern "C" {
 #endif
 
-/* The macro MET_UNUSED indicates that a  function, function argument or variable may
+/* The macro MMUX_EMACS_TEMPLATE_UNUSED indicates that a  function, function argument or variable may
    potentially be unused. Usage examples:
 
-   static int unused_function (char arg) MET_UNUSED;
-   int foo (char unused_argument MET_UNUSED);
-   int unused_variable MET_UNUSED;
+   static int unused_function (char arg) MMUX_EMACS_TEMPLATE_UNUSED;
+   int foo (char unused_argument MMUX_EMACS_TEMPLATE_UNUSED);
+   int unused_variable MMUX_EMACS_TEMPLATE_UNUSED;
 */
 #ifdef __GNUC__
-#  define MET_UNUSED		__attribute__((__unused__))
+#  define MMUX_EMACS_TEMPLATE_UNUSED		__attribute__((__unused__))
 #else
-#  define MET_UNUSED		/* empty */
+#  define MMUX_EMACS_TEMPLATE_UNUSED		/* empty */
 #endif
 
 #ifndef __GNUC__
@@ -56,25 +56,25 @@ extern "C" {
 #if defined _WIN32 || defined __CYGWIN__
 #  ifdef BUILDING_DLL
 #    ifdef __GNUC__
-#      define met_decl		__attribute__((__dllexport__)) extern
+#      define mmux_emacs_template_decl		__attribute__((__dllexport__)) extern
 #    else
-#      define met_decl		__declspec(dllexport) extern
+#      define mmux_emacs_template_decl		__declspec(dllexport) extern
 #    endif
 #  else
 #    ifdef __GNUC__
-#      define met_decl		__attribute__((__dllimport__)) extern
+#      define mmux_emacs_template_decl		__attribute__((__dllimport__)) extern
 #    else
-#      define met_decl		__declspec(dllimport) extern
+#      define mmux_emacs_template_decl		__declspec(dllimport) extern
 #    endif
 #  endif
-#  define met_private_decl	extern
+#  define mmux_emacs_template_private_decl	extern
 #else
 #  if __GNUC__ >= 4
-#    define met_decl		__attribute__((__visibility__("default"))) extern
-#    define met_private_decl	__attribute__((__visibility__("hidden")))  extern
+#    define mmux_emacs_template_decl		__attribute__((__visibility__("default"))) extern
+#    define mmux_emacs_template_private_decl	__attribute__((__visibility__("hidden")))  extern
 #  else
-#    define met_decl		extern
-#    define met_private_decl	extern
+#    define mmux_emacs_template_decl		extern
+#    define mmux_emacs_template_private_decl	extern
 #  endif
 #endif
 
@@ -104,7 +104,7 @@ extern "C" {
  ** Constants and preprocessor macros.
  ** ----------------------------------------------------------------- */
 
-#define MET_PC(POINTER_TYPE, POINTER_NAME, EXPRESSION)	\
+#define MMUX_EMACS_TEMPLATE_PC(POINTER_TYPE, POINTER_NAME, EXPRESSION)	\
   POINTER_TYPE * POINTER_NAME = (POINTER_TYPE *) (EXPRESSION)
 
 
@@ -112,18 +112,10 @@ extern "C" {
  ** Version functions.
  ** ----------------------------------------------------------------- */
 
-met_decl char const *	met_version_string		(void);
-met_decl int		met_version_interface_current	(void);
-met_decl int		met_version_interface_revision	(void);
-met_decl int		met_version_interface_age	(void);
-
-
-/** --------------------------------------------------------------------
- ** Library initialisation.
- ** ----------------------------------------------------------------- */
-
-met_decl void met_library_init (void)
-  __attribute__((__constructor__));
+mmux_emacs_template_decl char const *	mmux_emacs_template_version_string		(void);
+mmux_emacs_template_decl int		mmux_emacs_template_version_interface_current	(void);
+mmux_emacs_template_decl int		mmux_emacs_template_version_interface_revision	(void);
+mmux_emacs_template_decl int		mmux_emacs_template_version_interface_age	(void);
 
 
 /** --------------------------------------------------------------------
