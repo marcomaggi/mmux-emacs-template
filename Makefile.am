@@ -41,9 +41,10 @@ libmmux_emacs_template_la_CPPFLAGS	= $(AM_CPPFLAGS)
 libmmux_emacs_template_la_CFLAGS	= $(AM_CFLAGS)
 libmmux_emacs_template_la_LDFLAGS	= $(mmux_emacs_template_LINKER_VERSION) $(AM_LDFLAGS)
 libmmux_emacs_template_la_SOURCES	= \
-	src/mmux-emacs-template.h		\
-	src/mmux-emacs-template-internals.h	\
-	src/mmux-emacs-template-library.c
+	src/mmux-emacs-template.h			\
+	src/mmux-emacs-template-internals.h		\
+	src/mmux-emacs-template-library.c		\
+	src/mmux-emacs-template-builtin-objects.c
 
 
 #### Emacs code
@@ -60,7 +61,8 @@ src/mmux-emacs-template.elc: libmmux-emacs-template.la
 #### tests
 
 MMUX_EMACS_TEMPLATE_TESTS = \
-	tests/version.el
+	tests/version.el		\
+	tests/builtin-objects-use.el
 
 EXTRA_DIST	+= $(MMUX_EMACS_TEMPLATE_TESTS)
 TESTS		 = $(MMUX_EMACS_TEMPLATE_TESTS)

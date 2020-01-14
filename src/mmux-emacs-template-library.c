@@ -108,20 +108,8 @@ Fmmux_template_version_interface_age (emacs_env *env,
  ** Table of elisp functions.
  ** ----------------------------------------------------------------- */
 
-typedef emacs_value function_implementation_t (emacs_env *env, ptrdiff_t nargs, emacs_value args[], void *data);
-
-typedef struct module_function_t	module_function_t;
-
-struct module_function_t {
-  char const			* name;
-  function_implementation_t	* implementation;
-  ptrdiff_t			min_arity;
-  ptrdiff_t			max_arity;
-  char const			* documentation;
-};
-
 #define NUMBER_OF_MODULE_FUNCTIONS	4
-static module_function_t const module_functions[NUMBER_OF_MODULE_FUNCTIONS] = {
+static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS] = {
   {
     .name		= "mmux-template-version-string",
     .implementation	= Fmmux_template_version_string,
@@ -157,6 +145,25 @@ static module_function_t const module_functions[NUMBER_OF_MODULE_FUNCTIONS] = {
  ** Module initialisation.
  ** ----------------------------------------------------------------- */
 
+void
+mmux_template_define_functions_from_table (emacs_env * env, module_function_t const * module_functions, int number_of_module_functions)
+{
+  emacs_value	Qdefalias = env->intern(env, "defalias");
+
+  for (int i=0; i<number_of_module_functions; ++i) {
+    emacs_value	args[2]	= {
+      env->intern(env, module_functions[i].name),
+      env->make_function(env,
+			 module_functions[i].min_arity,
+			 module_functions[i].max_arity,
+			 module_functions[i].implementation,
+			 module_functions[i].documentation,
+			 NULL)
+    };
+    env->funcall(env, Qdefalias, 2, args);
+  }
+}
+
 int
 emacs_module_init (struct emacs_runtime *ert)
 {
@@ -168,23 +175,10 @@ emacs_module_init (struct emacs_runtime *ert)
     if (env->size < (ptrdiff_t)sizeof(*env)) {
       return 2;
     } else {
-      emacs_value	Qdefalias = env->intern(env, "defalias");
-
-      for (int i=0; i<NUMBER_OF_MODULE_FUNCTIONS; ++i) {
-	emacs_value	args[2]	= {
-	  env->intern(env, module_functions[i].name),
-	  env->make_function(env,
-			     module_functions[i].min_arity,
-			     module_functions[i].max_arity,
-			     module_functions[i].implementation,
-			     module_functions[i].documentation,
-			     NULL)
-	};
-	env->funcall(env, Qdefalias, 2, args);
-      }
+      mmux_template_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
+      mmux_template_builtin_objects_init(env);
+      return 0;
     }
-
-    return 0;
   }
 }
 
