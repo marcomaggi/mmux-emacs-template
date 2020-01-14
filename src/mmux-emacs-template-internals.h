@@ -76,6 +76,9 @@ mmux_template_define_functions_from_table (emacs_env * env, module_function_t co
 mmux_emacs_template_private_decl void
 mmux_template_builtin_objects_init (emacs_env * env);
 
+mmux_emacs_template_private_decl void
+mmux_template_user_ptr_objects_init (emacs_env * env);
+
 
 /** --------------------------------------------------------------------
  ** Done.

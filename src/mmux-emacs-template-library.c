@@ -177,6 +177,7 @@ emacs_module_init (struct emacs_runtime *ert)
     } else {
       mmux_template_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
       mmux_template_builtin_objects_init(env);
+      mmux_template_user_ptr_objects_init(env);
       return 0;
     }
   }

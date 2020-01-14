@@ -1,11 +1,11 @@
 /*
   Part of: MMUX Emacs Template
-  Contents: usge examples for built-in elisp objects
+  Contents: usge examples for user-ptr elisp objects
   Date: Jan 14, 2020
 
   Abstract
 
-	This module implements example functions  accessing and creating the built-in
+	This module implements example functions  accessing and creating the user-ptr
 	elisp objects.
 
   Copyright (C) 2020 Marco Maggi <mrc.mgg@gmail.com>
@@ -28,44 +28,56 @@
  ** ----------------------------------------------------------------- */
 
 #include "mmux-emacs-template-internals.h"
+#include <stdlib.h>
 
 
 /** --------------------------------------------------------------------
  ** Example functions.
  ** ----------------------------------------------------------------- */
 
-static emacs_value
-Fmmux_template_use_integer (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
-			    emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
-{
-  intmax_t	N = env->extract_integer(env, args[0]);
+typedef struct mmux_template_cplx_t	mmux_template_cplx_t;
 
-  return env->make_integer(env, 1+N);
+struct mmux_template_cplx_t {
+  double	X;
+  double	Y;
+};
+
+static void
+cplx_finalizer (void * obj)
+{
+  free(obj);
 }
 
 static emacs_value
-Fmmux_template_use_float (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
+Fmmux_template_make_cplx (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
 			  emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
 {
-  double	N = env->extract_float(env, args[0]);
+  double		X = env->extract_float(env, args[0]);
+  double		Y = env->extract_float(env, args[1]);
+  mmux_template_cplx_t	* obj = malloc(sizeof(mmux_template_cplx_t));
 
-  return env->make_float(env, 1.0+N);
+  obj->X = X;
+  obj->Y = Y;
+
+  return env->make_user_ptr(env, cplx_finalizer, obj);
 }
 
 static emacs_value
-Fmmux_template_use_string (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
-			   emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
+Fmmux_template_get_X (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
+		      emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
 {
-  ptrdiff_t	len = 0;
+  mmux_template_cplx_t	* obj = env->get_user_ptr(env, args[0]);
 
-  env->copy_string_contents(env, args[0], NULL, &len);
-  {
-    char	buf[len];
+  return env->make_float(env, obj->X);
+}
 
-    env->copy_string_contents(env, args[0], buf, &len);
-    /* We do not take into account the ending zero here. */
-    return env->make_string(env, buf, len-1);
-  }
+static emacs_value
+Fmmux_template_get_Y (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED,
+		      emacs_value args[], void * data MMUX_EMACS_TEMPLATE_UNUSED)
+{
+  mmux_template_cplx_t	* obj = env->get_user_ptr(env, args[0]);
+
+  return env->make_float(env, obj->Y);
 }
 
 
@@ -76,26 +88,26 @@ Fmmux_template_use_string (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_U
 #define NUMBER_OF_MODULE_FUNCTIONS	3
 static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS] = {
   {
-    .name		= "mmux-template-use-integer",
-    .implementation	= Fmmux_template_use_integer,
-    .min_arity		= 1,
-    .max_arity		= 1,
-    .documentation	= "Use an integer object."
+    .name		= "mmux-template-make-cplx",
+    .implementation	= Fmmux_template_make_cplx,
+    .min_arity		= 2,
+    .max_arity		= 2,
+    .documentation	= "Build and return a new cplx object."
   },
   {
-    .name		= "mmux-template-use-float",
-    .implementation	= Fmmux_template_use_float,
+    .name		= "mmux-template-get-X",
+    .implementation	= Fmmux_template_get_X,
     .min_arity		= 1,
     .max_arity		= 1,
-    .documentation	= "Use a float object."
+    .documentation	= "Return the X component of a cplx object."
   },
   {
-    .name		= "mmux-template-use-string",
-    .implementation	= Fmmux_template_use_string,
+    .name		= "mmux-template-get-Y",
+    .implementation	= Fmmux_template_get_Y,
     .min_arity		= 1,
     .max_arity		= 1,
-    .documentation	= "Use a string object."
-  }
+    .documentation	= "Return the Y component of a cplx object."
+  },
 };
 
 
@@ -104,7 +116,7 @@ static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS
  ** ----------------------------------------------------------------- */
 
 void
-mmux_template_builtin_objects_init (emacs_env * env)
+mmux_template_user_ptr_objects_init (emacs_env * env)
 {
   mmux_template_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
 }

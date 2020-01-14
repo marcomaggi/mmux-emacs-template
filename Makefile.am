@@ -44,7 +44,8 @@ libmmux_emacs_template_la_SOURCES	= \
 	src/mmux-emacs-template.h			\
 	src/mmux-emacs-template-internals.h		\
 	src/mmux-emacs-template-library.c		\
-	src/mmux-emacs-template-builtin-objects.c
+	src/mmux-emacs-template-builtin-objects.c	\
+	src/mmux-emacs-template-user-pointer-objects.c
 
 
 #### Emacs code
@@ -62,7 +63,8 @@ src/mmux-emacs-template.elc: libmmux-emacs-template.la
 
 MMUX_EMACS_TEMPLATE_TESTS = \
 	tests/version.el		\
-	tests/builtin-objects-use.el
+	tests/builtin-objects-use.el	\
+	tests/user-pointer-objects.el
 
 EXTRA_DIST	+= $(MMUX_EMACS_TEMPLATE_TESTS)
 TESTS		 = $(MMUX_EMACS_TEMPLATE_TESTS)
