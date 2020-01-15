@@ -156,9 +156,6 @@ $ make install-html
 The  stuff was  written by  Marco Maggi.   If this  package exists  it's
 because of the great GNU software tools that he uses all the time.
 
-Some code  in the Emacs  module's infrastructure comes from  projects by
-Syohei YOSHIDA.
-
 ## Bugs, vulnerabilities and contributions
 
 Bug  and vulnerability  reports are  appreciated, all  the vulnerability
