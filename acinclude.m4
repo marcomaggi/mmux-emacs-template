@@ -14,6 +14,7 @@ m4_include(meta/autoconf/ax-append-flag.m4)
 m4_include(meta/autoconf/ax-append-compile-flags.m4)
 m4_include(meta/autoconf/ax-append-link-flags.m4)
 m4_include(meta/autoconf/ax-gcc-version.m4)
+m4_include(meta/autoconf/ax-proc-emacs.m4)
 
 dnl m4_include(meta/autoconf/mmux-lang-c99.m4)
 m4_include(meta/autoconf/mmux-lang-c11.m4)

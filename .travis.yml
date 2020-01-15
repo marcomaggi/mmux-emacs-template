@@ -160,9 +160,9 @@ matrix:
   fast_finish: true
 
   include:
-    # Plain build under Ubuntu GNU+Linux "xenial", GCC 8.
+    # Plain build under Ubuntu GNU+Linux "bionic", GCC 8.
     - os: linux
-      dist: xenial
+      dist: bionic
       compiler: gcc-8
       addons:
         apt:
@@ -178,9 +178,9 @@ matrix:
         (umask 0; sudo make install);
         make installcheck
 
-    # Plain build under Ubuntu GNU+Linux "xenial", CLang automatically selected by Travis CI.
+    # Plain build under Ubuntu GNU+Linux "bionic", CLang automatically selected by Travis CI.
     - os: linux
-      dist: xenial
+      dist: bionic
       compiler: clang
       script: |
         ./configure --enable-maintainer-mode CFLAGS='-Wno-unknown-attributes';
@@ -205,9 +205,9 @@ matrix:
         (umask 0; sudo make install);
         make installcheck;
 
-    # Codecov support under Ubuntu GNU+Linux "xenial", GCC 8.
+    # Codecov support under Ubuntu GNU+Linux "bionic", GCC 8.
     - os: linux
-      dist: xenial
+      dist: bionic
       compiler: gcc-8
       addons:
         apt:
