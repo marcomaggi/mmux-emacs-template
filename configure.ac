@@ -41,6 +41,7 @@ AC_PROG_MKDIR_P
 
 AX_PROG_EMACS
 AM_PATH_LISPDIR
+AC_CHECK_HEADER([emacs-module.h],,[AC_MSG_ERROR([missing emacs-module.h],1)])
 
 LT_PREREQ([2.4])
 LT_INIT
