@@ -9,7 +9,7 @@ AC_INIT([MMUX Emacs Template],[MMUX_PACKAGE_VERSION],
 MMUX_INIT
 MMUX_LIBTOOL_LIBRARY_VERSIONS([mmux_emacs_template],1,0,0)
 AC_REVISION([0.1])
-AC_COPYRIGHT([Copyright (c) 2020 Marco Maggi <marco.maggi-ipsu@poste.it>
+AC_COPYRIGHT([Copyright (c) 2020 Marco Maggi <mrc.mgg@gmail.com>
 
 This program is free software: you  can redistribute it and/or modify it
 under the  terms of the GNU  General Public License as  published by the
