@@ -1,6 +1,6 @@
 # .travis.yml --
 #
-# Travis CI configuration for CCTemplate.
+# Travis CI configuration for MMUX Emacs Template.
 
 #page
 #### about branch selection
@@ -144,11 +144,6 @@ install:
   - ./meta/travis-ci/install-autoconf.sh;
   - ./meta/travis-ci/install-automake.sh;
   - ./meta/travis-ci/install-texinfo.sh;
-  - ./meta/travis-ci/install-ccexceptions.sh;
-  - ./meta/travis-ci/install-cctests.sh;
-  - ./meta/travis-ci/install-ccmemory.sh;
-  - ./meta/travis-ci/install-ccstructs.sh;
-  - ./meta/travis-ci/install-ccstrings.sh;
 
 #page
 #### build scripts
