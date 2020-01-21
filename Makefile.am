@@ -82,6 +82,14 @@ MMUX_EMACS_INSTALLCHECK	= $(EMACS) --batch --quick --directory $(libdir) --direc
 installcheck-local: $(TESTS)
 	@for f in $(TESTS); do $(MMUX_EMACS_INSTALLCHECK) $(srcdir)/$$f; done
 
+## --------------------------------------------------------------------
+
+MMUX_EMACS_TEMPLATE_TEST_SELECTED_TESTS	= $(srcdir)/tests/*$(file)*.el
+MMUX_EMACS_TEMPLATE_TEST_RUNTESTS	= $(EMACS) --batch --quick --directory $(builddir)/.libs --directory $(builddir)/src --load
+
+test:
+	for f in $(MMUX_EMACS_TEMPLATE_TEST_SELECTED_TESTS) ; do $(MMUX_EMACS_TEMPLATE_TEST_RUNTESTS) $$f; done
+
 
 #### common rules
 
