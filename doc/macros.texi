@@ -177,6 +177,17 @@
 @acronym{MPEG}
 @end macro
 
+@ifhtml
+@macro mmux{}
+@acronym{mmux}
+@end macro
+@end ifhtml
+@ifnothtml
+@macro mmux{}
+@acronym{MMUX}
+@end macro
+@end ifnothtml
+
 @c ------------------------------------------------------------
 
 @macro oob{}

@@ -13,11 +13,11 @@
 @c Values.
 @c ------------------------------------------------------------
 
-@set TITLE                      @acronym{mmux} Emacs Template
+@set TITLE                      @mmux{} Emacs Template
 
 @c To be used as @value{PACKAGE} whenever we need to include the full
 @c name of this package.
-@set PACKAGE                    @acronym{mmux} Emacs Template
+@set PACKAGE                    @mmux{} Emacs Template
 
 @c To be used as @value{PACKAGE} whenever we need to include the
 @c nickname of the project: the name that is used to compose the
@@ -72,10 +72,6 @@
 
 @macro template{}
 @acronym{TEMPLATE}
-@end macro
-
-@macro mmux{}
-@acronym{mmux}
 @end macro
 
 @c page
