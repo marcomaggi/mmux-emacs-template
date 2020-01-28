@@ -42,6 +42,18 @@ AC_PROG_MKDIR_P
 AX_PROG_EMACS
 AM_PATH_LISPDIR
 AC_CHECK_HEADER([emacs-module.h],,[AC_MSG_ERROR([missing emacs-module.h],1)])
+# FIXME Is this correct?
+#
+# By  defining  this  substitution  we  set the  value  of  ELCFLAGS  in
+# "Makefile.in"  to  the   value  specified  on  the   command  line  of
+# "configure";  this  allows  us  to specify  "--directory"  options  at
+# configuration time and use them at make time.
+#
+# But  should ELFFLAGS  be left  free  for the  user to  specify on  the
+# command line of make?
+#
+# (Marco Maggi; Jan 28, 2020)
+AC_SUBST([ELCFLAGS])
 
 LT_PREREQ([2.4])
 LT_INIT
@@ -112,8 +124,11 @@ dnl PKG_CHECK_MODULES([GSL],[gsl >= 1.16],[gsl=yes],[gsl=no])
 dnl GSL_CPPFLAGS=$(pkg-config gsl --cflags)
 dnl GSL_LDFLAGS=$(pkg-config gsl --libs)
 
-dnl AC_CHECK_HEADERS([gmp.h],,[AC_MSG_ERROR([Cannot find libgmp.])])
-dnl AC_CHECK_LIB([gmp],[__gmpn_add],,[AC_MSG_ERROR([Cannot find libgmp.])])
+AC_CHECK_HEADERS([gmp.h],,[AC_MSG_ERROR([Cannot find libgmp.])])
+AC_CHECK_LIB([gmp],[__gmpn_add],,[AC_MSG_ERROR([Cannot find libgmp.])])
+
+MMUX_CHECK_EMACS_FEATURE([GMP],[gmp])
+AS_IF([test "x$mmux_emacs_cv_feature_GMP"='xyes'],,[AC_MSG_ERROR([Emacs feature gmp not available.])])
 
 AC_CACHE_SAVE
 
