@@ -7,6 +7,7 @@ EXTRA_DIST		= INSTALL			\
 dist_doc_DATA		= README COPYING
 AM_CFLAGS		= $(MMUX_CFLAGS)
 AM_CPPFLAGS		= -I$(srcdir)/src
+CLEANFILES		=
 
 ## --------------------------------------------------------------------
 
@@ -15,16 +16,37 @@ nodist_pkgconfig_DATA	= meta/scripts/mmux-emacs-template.pc
 
 #### documentation
 
+EXTRA_DIST		+= doc/mmux-emacs-template.style.css
+CLEANFILES		+= doc/mmux-emacs-template.css
+
 AM_MAKEINFOFLAGS	= --no-split
-AM_MAKEINFOHTMLFLAGS	= --split=node -c WORDS_IN_PAGE=0 \
+AM_MAKEINFOHTMLFLAGS	= --split=node -c WORDS_IN_PAGE=0 --css-ref=mmux-emacs-gmp.css \
 	-c PRE_BODY_CLOSE="<p>This document describes version <tt>$(PACKAGE_VERSION)</tt> of <em>$(PACKAGE_NAME)</em>.</p>"
 
 info_TEXINFOS		= doc/mmux-emacs-template.texi
 doc_mmux_emacs_template_TEXINFOS = \
 	doc/macros.texi			\
+	doc/elisp-macros.texi		\
 	doc/overview-linking.texi	\
 	doc/gpl-3.0.texi		\
 	doc/fdl-1.3.texi
+
+## --------------------------------------------------------------------
+
+doc/mmux-emacs-template.html/$(am__dirstamp): doc/$(am__dirstamp)
+	@$(MKDIR_P) doc/mmux-emacs-template.html/
+	@: > doc/mmux-emacs-template.html/$(am__dirstamp)
+
+doc/mmux-emacs-template.html/mmux-emacs-template.css: doc/mmux-emacs-template.style.css doc/mmux-emacs-template.html/$(am__dirstamp)
+	$(INSTALL) -m 0444 "$(top_srcdir)/doc/mmux-emacs-template.style.css" "$(builddir)/doc/mmux-emacs-template.html/mmux-emacs-template.css"
+
+## --------------------------------------------------------------------
+
+html-local: doc/mmux-emacs-template.html/mmux-emacs-template.css
+
+install-html-local:
+	$(MKDIR_P) "$(DESTDIR)$(htmldir)/mmux-emacs-template.html/"
+	$(INSTALL) -m 0444 $(builddir)/doc/mmux-emacs-template.html/mmux-emacs-template.css "$(DESTDIR)$(htmldir)/mmux-emacs-template.html/"
 
 
 #### libraries
@@ -42,6 +64,7 @@ libmmux_emacs_template_la_CFLAGS	= $(AM_CFLAGS)
 libmmux_emacs_template_la_LDFLAGS	= $(mmux_emacs_template_LINKER_VERSION) $(AM_LDFLAGS)
 libmmux_emacs_template_la_SOURCES	= \
 	src/mmux-emacs-template.h			\
+	src/mmux-emacs-internals.h			\
 	src/mmux-emacs-template-internals.h		\
 	src/mmux-emacs-template-library.c		\
 	src/mmux-emacs-template-builtin-objects.c	\
@@ -52,7 +75,7 @@ libmmux_emacs_template_la_SOURCES	= \
 
 # This  variable is  reserved to  the  package author.   Users of  the
 # package can set ELCFLAGS.
-AM_ELCFLAGS	= --quick --directory $(PWD)/.libs
+AM_ELCFLAGS	= --quick --directory $(builddir)/src --directory $(PWD)/.libs
 
 dist_lisp_LISP	= src/mmux-emacs-template.el
 
@@ -61,26 +84,32 @@ src/mmux-emacs-template.elc: libmmux-emacs-template.la
 
 #### tests
 
-MMUX_EMACS_TEMPLATE_TESTS = \
+MMUX_EMACS_TEMPLATE_TESTS_SRC = \
 	tests/version.el		\
 	tests/builtin-objects-use.el	\
 	tests/user-pointer-objects.el
 
-EXTRA_DIST	+= $(MMUX_EMACS_TEMPLATE_TESTS)
+MMUX_EMACS_TEMPLATE_TESTS = \
+	tests/version.elc		\
+	tests/builtin-objects-use.elc	\
+	tests/user-pointer-objects.elc
+
+EXTRA_DIST	+= $(MMUX_EMACS_TEMPLATE_TESTS_SRC)
 TESTS		 = $(MMUX_EMACS_TEMPLATE_TESTS)
 
 # We must make sure that this ends with a semicolon!!!
 AM_TESTS_ENVIRONMENT	=
-TEST_EXTENSIONS		= .el
-EL_LOG_COMPILER		= $(EMACS)
-AM_EL_LOG_FLAGS		= --batch --quick --directory $(builddir)/.libs --directory $(builddir)/src -l
+TEST_EXTENSIONS		= .elc
+ELC_LOG_COMPILER	= $(EMACS)
+AM_ELC_LOG_FLAGS	= --batch --quick --directory $(builddir)/.libs --directory $(builddir)/src -l
+CLEANFILES		+= $(MMUX_EMACS_TEMPLATE_TESTS)
 
 ## --------------------------------------------------------------------
 
-MMUX_EMACS_INSTALLCHECK	= $(EMACS) --batch --quick --directory $(libdir) --directory $(lispdir) -l
+MMUX_EMACS_INSTALLCHECK	= $(EMACS) --batch --quick --directory $(libdir) --directory $(lispdir) --load
 
-installcheck-local: $(TESTS)
-	@for f in $(TESTS); do $(MMUX_EMACS_INSTALLCHECK) $(srcdir)/$$f; done
+installcheck-local:
+	@for f in $(MMUX_EMACS_GMP_TESTS_SRC); do $(MMUX_EMACS_INSTALLCHECK) $(srcdir)/$$f; done
 
 ## --------------------------------------------------------------------
 

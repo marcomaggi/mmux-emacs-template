@@ -33,6 +33,7 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+#include "mmux-emacs-internals.h"
 #include "mmux-emacs-template.h"
 
 
@@ -45,25 +46,10 @@
  ** Type definitions.
  ** ----------------------------------------------------------------- */
 
-typedef emacs_value function_implementation_t (emacs_env *env, ptrdiff_t nargs, emacs_value args[], void *data);
-
-typedef struct module_function_t	module_function_t;
-
-struct module_function_t {
-  char const			* name;
-  function_implementation_t	* implementation;
-  ptrdiff_t			min_arity;
-  ptrdiff_t			max_arity;
-  char const			* documentation;
-};
-
 
 /** --------------------------------------------------------------------
  ** Constants.
  ** ----------------------------------------------------------------- */
-
-/* This is required by GNU Emacs' API. */
-mmux_emacs_template_decl int  plugin_is_GPL_compatible;
 
 
 /** --------------------------------------------------------------------
@@ -71,13 +57,13 @@ mmux_emacs_template_decl int  plugin_is_GPL_compatible;
  ** ----------------------------------------------------------------- */
 
 mmux_emacs_template_private_decl void
-mmux_template_define_functions_from_table (emacs_env * env, module_function_t const * module_functions, int number_of_module_functions);
+mmux_emacs_template_define_functions_from_table (emacs_env * env, module_function_t const * module_functions, int number_of_module_functions);
 
 mmux_emacs_template_private_decl void
-mmux_template_builtin_objects_init (emacs_env * env);
+mmux_emacs_template_builtin_objects_init (emacs_env * env);
 
 mmux_emacs_template_private_decl void
-mmux_template_user_ptr_objects_init (emacs_env * env);
+mmux_emacs_template_user_ptr_objects_init (emacs_env * env);
 
 
 /** --------------------------------------------------------------------

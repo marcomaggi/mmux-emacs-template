@@ -6,6 +6,7 @@
 
 @include version.texi
 @include macros.texi
+@include elisp-macros.texi
 
 @c page
 @c ------------------------------------------------------------

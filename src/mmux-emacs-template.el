@@ -4,7 +4,7 @@
 
 ;; Author: Marco Maggi <mrc.mgg@gmail.com>
 ;; Created: Sun Jan 12, 2020
-;; Time-stamp: <2020-01-14 15:22:56 marco>
+;; Time-stamp: <2020-01-28 16:04:07 marco>
 ;; Keywords: extensions
 
 ;; This file is part of MMUX Emacs Template.
@@ -32,6 +32,8 @@
 ;;; Code:
 
 (require 'cl-lib)
+(eval-when-compile
+  (load "libmmux-emacs-template"))
 (load "libmmux-emacs-template")
 
 (define-error 'mmux-template-error
@@ -42,22 +44,22 @@
   "Error allocating memory."
   'mmux-template-error)
 
-(cl-defstruct mmux-template-cplx
+(cl-defstruct (mmux-template-cplx (:constructor make-mmux-template-cplx))
   obj)
 
 (defun mmux-template-make-cplx (X Y)
-  "Build and return a new cplx object."
-  (make-mmux-template-cplx :obj (mmux-template-cplx-cmake X Y)))
+  "Build and return a new `mmux-temlate-cplx' object."
+  (make-mmux-template-cplx :obj (mmux-template-c-cplx-make X Y)))
 
 (defun mmux-template-get-X (obj)
   "Return the X component of an object of type `mmux-template-cplx'."
   (cl-assert (mmux-template-cplx-p obj))
-  (mmux-template-cplx-cget-X (mmux-template-cplx-obj obj)))
+  (mmux-template-c-cplx-get-X (mmux-template-cplx-obj obj)))
 
 (defun mmux-template-get-Y (obj)
   "Return the Y component of an object of type `mmux-template-cplx'."
   (cl-assert (mmux-template-cplx-p obj))
-  (mmux-template-cplx-cget-Y (mmux-template-cplx-obj obj)))
+  (mmux-template-c-cplx-get-Y (mmux-template-cplx-obj obj)))
 
 (provide 'mmux-emacs-template)
 

@@ -104,9 +104,9 @@ static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS
  ** ----------------------------------------------------------------- */
 
 void
-mmux_template_builtin_objects_init (emacs_env * env)
+mmux_emacs_template_builtin_objects_init (emacs_env * env)
 {
-  mmux_template_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
+  mmux_emacs_template_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
 }
 
 /* end of file */
