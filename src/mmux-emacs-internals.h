@@ -111,9 +111,9 @@ typedef emacs_value function_implementation_t (emacs_env *env, ptrdiff_t nargs, 
 typedef void mmux_emacs_finalizer_struct_t (void *);
 typedef mmux_emacs_finalizer_struct_t *	mmux_emacs_finalizer_t;
 
-typedef struct module_function_t	module_function_t;
+typedef struct mmux_emacs_module_function_t	mmux_emacs_module_function_t;
 
-struct module_function_t {
+struct mmux_emacs_module_function_t {
   char const			* name;
   function_implementation_t	* implementation;
   ptrdiff_t			min_arity;
@@ -135,6 +135,15 @@ typedef unsigned long int	mmux_ulint_t;
 
 /* This is required by GNU Emacs' API. */
 mmux_emacs_decl int  plugin_is_GPL_compatible;
+
+
+/** --------------------------------------------------------------------
+ ** Function prototypes.
+ ** ----------------------------------------------------------------- */
+
+mmux_emacs_private_decl void
+mmux_emacs_define_functions_from_table (emacs_env * env, mmux_emacs_module_function_t const * module_functions,
+					int number_of_module_functions);
 
 
 /** --------------------------------------------------------------------

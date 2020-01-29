@@ -57,9 +57,6 @@
  ** ----------------------------------------------------------------- */
 
 mmux_emacs_template_private_decl void
-mmux_emacs_template_define_functions_from_table (emacs_env * env, module_function_t const * module_functions, int number_of_module_functions);
-
-mmux_emacs_template_private_decl void
 mmux_emacs_template_builtin_objects_init (emacs_env * env);
 
 mmux_emacs_template_private_decl void

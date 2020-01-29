@@ -101,7 +101,7 @@ Fmmux_emacs_template_cplx_get_Y (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMP
  ** ----------------------------------------------------------------- */
 
 #define NUMBER_OF_MODULE_FUNCTIONS	3
-static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS] = {
+static mmux_emacs_module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS] = {
   {
     .name		= "mmux-template-c-cplx-make",
     .implementation	= Fmmux_emacs_template_cplx_cmake,
@@ -133,7 +133,7 @@ static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS
 void
 mmux_emacs_template_user_ptr_objects_init (emacs_env * env)
 {
-  mmux_emacs_template_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
+  mmux_emacs_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
 }
 
 /* end of file */

@@ -101,7 +101,7 @@ Fmmux_emacs_template_version_interface_age (MMUX_EMACS_IFACE_FUNCTION_UNUSED_ARG
  ** ----------------------------------------------------------------- */
 
 #define NUMBER_OF_MODULE_FUNCTIONS	4
-static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS] = {
+static mmux_emacs_module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS] = {
   {
     .name		= "mmux-template-version-string",
     .implementation	= Fmmux_emacs_template_version_string,
@@ -138,7 +138,8 @@ static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS
  ** ----------------------------------------------------------------- */
 
 void
-mmux_emacs_template_define_functions_from_table (emacs_env * env, module_function_t const * module_functions, int number_of_module_functions)
+mmux_emacs_define_functions_from_table (emacs_env * env, mmux_emacs_module_function_t const * module_functions,
+					int number_of_module_functions)
 {
   emacs_value	Qdefalias = env->intern(env, "defalias");
 
@@ -170,7 +171,7 @@ emacs_module_init (struct emacs_runtime *ert)
     if (env->size < (ptrdiff_t)sizeof(*env)) {
       return 2;
     } else {
-      mmux_emacs_template_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
+      mmux_emacs_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
       mmux_emacs_template_builtin_objects_init(env);
       mmux_emacs_template_user_ptr_objects_init(env);
       return 0;

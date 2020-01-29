@@ -74,7 +74,7 @@ Fmmux_template_use_string (emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_U
  ** ----------------------------------------------------------------- */
 
 #define NUMBER_OF_MODULE_FUNCTIONS	3
-static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS] = {
+static mmux_emacs_module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS] = {
   {
     .name		= "mmux-template-use-integer",
     .implementation	= Fmmux_template_use_integer,
@@ -106,7 +106,7 @@ static module_function_t const module_functions_table[NUMBER_OF_MODULE_FUNCTIONS
 void
 mmux_emacs_template_builtin_objects_init (emacs_env * env)
 {
-  mmux_emacs_template_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
+  mmux_emacs_define_functions_from_table(env, module_functions_table, NUMBER_OF_MODULE_FUNCTIONS);
 }
 
 /* end of file */
