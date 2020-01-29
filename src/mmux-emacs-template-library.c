@@ -67,40 +67,32 @@ mmux_emacs_template_version_interface_age (void)
 /* ------------------------------------------------------------------ */
 
 static emacs_value
-Fmmux_emacs_template_version_string (emacs_env *env,
-			       ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED, emacs_value args[] MMUX_EMACS_TEMPLATE_UNUSED,
-			       void *data MMUX_EMACS_TEMPLATE_UNUSED)
+Fmmux_emacs_template_version_string (MMUX_EMACS_IFACE_FUNCTION_UNUSED_ARGS)
 {
   char const *	str = mmux_emacs_template_version_string();
 
   return mmux_emacs_make_string(env, str, strlen(str));
 }
 static emacs_value
-Fmmux_emacs_template_version_interface_current (emacs_env *env,
-					  ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED, emacs_value args[] MMUX_EMACS_TEMPLATE_UNUSED,
-					  void *data MMUX_EMACS_TEMPLATE_UNUSED)
+Fmmux_emacs_template_version_interface_current (MMUX_EMACS_IFACE_FUNCTION_UNUSED_ARGS)
 {
   int	N = mmux_emacs_template_version_interface_current();
 
-  return mmux_emacs_make_int(env, (intmax_t)N);
+  return mmux_emacs_make_integer(env, (intmax_t)N);
 }
 static emacs_value
-Fmmux_emacs_template_version_interface_revision (emacs_env *env,
-					   ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED, emacs_value args[] MMUX_EMACS_TEMPLATE_UNUSED,
-					   void *data MMUX_EMACS_TEMPLATE_UNUSED)
+Fmmux_emacs_template_version_interface_revision (MMUX_EMACS_IFACE_FUNCTION_UNUSED_ARGS)
 {
   int	N = mmux_emacs_template_version_interface_revision();
 
-  return mmux_emacs_make_int(env, (intmax_t)N);
+  return mmux_emacs_make_integer(env, (intmax_t)N);
 }
 static emacs_value
-Fmmux_emacs_template_version_interface_age (emacs_env *env,
-				      ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED, emacs_value args[] MMUX_EMACS_TEMPLATE_UNUSED,
-				      void *data MMUX_EMACS_TEMPLATE_UNUSED)
+Fmmux_emacs_template_version_interface_age (MMUX_EMACS_IFACE_FUNCTION_UNUSED_ARGS)
 {
   int	N = mmux_emacs_template_version_interface_age();
 
-  return mmux_emacs_make_int(env, (intmax_t)N);
+  return mmux_emacs_make_integer(env, (intmax_t)N);
 }
 
 

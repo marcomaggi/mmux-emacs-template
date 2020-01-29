@@ -97,6 +97,10 @@ extern "C" {
  ** Preprocessor macros.
  ** ----------------------------------------------------------------- */
 
+#undef  MMUX_EMACS_IFACE_FUNCTION_UNUSED_ARGS
+#define MMUX_EMACS_IFACE_FUNCTION_UNUSED_ARGS \
+  emacs_env *env, ptrdiff_t nargs MMUX_EMACS_TEMPLATE_UNUSED, \
+    emacs_value args[] MMUX_EMACS_TEMPLATE_UNUSED, void *data MMUX_EMACS_TEMPLATE_UNUSED
 
 
 /** --------------------------------------------------------------------
@@ -209,7 +213,7 @@ mmux_emacs_make_boolean (emacs_env * env, int val)
 }
 
 static inline emacs_value
-mmux_emacs_make_int (emacs_env * env, intmax_t arg)
+mmux_emacs_make_integer (emacs_env * env, intmax_t arg)
 {
   return env->make_integer(env, arg);
 }
@@ -223,25 +227,25 @@ mmux_emacs_make_float (emacs_env * env, double arg)
 static inline emacs_value
 mmux_emacs_make_uint (emacs_env * env, mmux_uint_t arg)
 {
-  return mmux_emacs_make_int(env, (intmax_t)arg);
+  return mmux_emacs_make_integer(env, (intmax_t)arg);
 }
 
 static inline emacs_value
 mmux_emacs_make_sint (emacs_env * env, mmux_sint_t arg)
 {
-  return mmux_emacs_make_int(env, (intmax_t)arg);
+  return mmux_emacs_make_integer(env, (intmax_t)arg);
 }
 
 static inline emacs_value
 mmux_emacs_make_ulint (emacs_env * env, mmux_ulint_t arg)
 {
-  return mmux_emacs_make_int(env, (intmax_t)arg);
+  return mmux_emacs_make_integer(env, (intmax_t)arg);
 }
 
 static inline emacs_value
 mmux_emacs_make_slint (emacs_env * env, mmux_slint_t arg)
 {
-  return mmux_emacs_make_int(env, (intmax_t)arg);
+  return mmux_emacs_make_integer(env, (intmax_t)arg);
 }
 
 static inline emacs_value
