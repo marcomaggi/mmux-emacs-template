@@ -97,11 +97,13 @@ MMUX_EMACS_TEMPLATE_TESTS = \
 EXTRA_DIST	+= $(MMUX_EMACS_TEMPLATE_TESTS_SRC)
 TESTS		 = $(MMUX_EMACS_TEMPLATE_TESTS)
 
+MMUX_EMACS_CHECK_FLAGS	= --batch --quick --directory $(builddir)/.libs --directory $(builddir)/src $(ELCFLAGS) --load
+
 # We must make sure that this ends with a semicolon!!!
 AM_TESTS_ENVIRONMENT	=
 TEST_EXTENSIONS		= .elc
 ELC_LOG_COMPILER	= $(EMACS)
-AM_ELC_LOG_FLAGS	= --batch --quick --directory $(builddir)/.libs --directory $(builddir)/src -l
+AM_ELC_LOG_FLAGS	= $(MMUX_EMACS_CHECK_FLAGS)
 CLEANFILES		+= $(MMUX_EMACS_TEMPLATE_TESTS)
 
 ## --------------------------------------------------------------------
@@ -114,7 +116,7 @@ installcheck-local:
 ## --------------------------------------------------------------------
 
 MMUX_EMACS_TEMPLATE_TEST_SELECTED_TESTS	= $(srcdir)/tests/*$(file)*.el
-MMUX_EMACS_TEMPLATE_TEST_RUNTESTS	= $(EMACS) --batch --quick --directory $(builddir)/.libs --directory $(builddir)/src --load
+MMUX_EMACS_TEMPLATE_TEST_RUNTESTS	= $(EMACS) $(MMUX_EMACS_CHECK_FLAGS)
 
 test:
 	for f in $(MMUX_EMACS_TEMPLATE_TEST_SELECTED_TESTS) ; do $(MMUX_EMACS_TEMPLATE_TEST_RUNTESTS) $$f; done
