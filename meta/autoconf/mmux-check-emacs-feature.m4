@@ -1,6 +1,6 @@
 ## mmux-check-emacs-feature.m4 --
 #
-# Basic definitions for MMUX packages.
+# Checking GNU Emacs features availability.
 #
 # LICENSE
 #

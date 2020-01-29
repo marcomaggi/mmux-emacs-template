@@ -161,7 +161,7 @@ mmux_emacs_get_user_ptr (emacs_env * env, emacs_value arg)
 }
 
 static inline intmax_t
-mmux_emacs_get_int (emacs_env * env, emacs_value arg)
+mmux_emacs_get_integer (emacs_env * env, emacs_value arg)
 {
   return env->extract_integer(env, arg);
 }
@@ -175,25 +175,25 @@ mmux_emacs_get_float (emacs_env * env, emacs_value arg)
 static inline mmux_ulint_t
 mmux_emacs_get_ulint (emacs_env * env, emacs_value arg)
 {
-  return ((mmux_ulint_t)(mmux_emacs_get_int(env, arg)));
+  return ((mmux_ulint_t)(mmux_emacs_get_integer(env, arg)));
 }
 
 static inline mmux_slint_t
 mmux_emacs_get_slint (emacs_env * env, emacs_value arg)
 {
-  return ((mmux_slint_t)(mmux_emacs_get_int(env, arg)));
+  return ((mmux_slint_t)(mmux_emacs_get_integer(env, arg)));
 }
 
 static inline mmux_ulint_t
 mmux_emacs_get_uint (emacs_env * env, emacs_value arg)
 {
-  return ((mmux_uint_t)(mmux_emacs_get_int(env, arg)));
+  return ((mmux_uint_t)(mmux_emacs_get_integer(env, arg)));
 }
 
 static inline mmux_sint_t
 mmux_emacs_get_sint (emacs_env * env, emacs_value arg)
 {
-  return ((mmux_sint_t)(mmux_emacs_get_int(env, arg)));
+  return ((mmux_sint_t)(mmux_emacs_get_integer(env, arg)));
 }
 
 
