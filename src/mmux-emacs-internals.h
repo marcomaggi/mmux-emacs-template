@@ -143,7 +143,11 @@ mmux_emacs_decl int  plugin_is_GPL_compatible;
 
 mmux_emacs_private_decl void
 mmux_emacs_define_functions_from_table (emacs_env * env, mmux_emacs_module_function_t const * module_functions,
-					int number_of_module_functions);
+					int number_of_module_functions)
+  __attribute__((__nonnull__(1,2)));
+
+mmux_emacs_decl int emacs_module_init (struct emacs_runtime *ert)
+  __attribute__((__nonnull__(1)));
 
 
 /** --------------------------------------------------------------------
